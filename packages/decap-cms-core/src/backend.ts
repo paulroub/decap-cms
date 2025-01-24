@@ -1350,13 +1350,23 @@ export class Backend {
       .toArray();
   }
 
+  fieldValueMatches(fieldValue: unknown, ruleValue: unknown) {
+    // dumb fix
+
+    if (typeof ruleValue === 'string' && ruleValue.startsWith('<')) {
+      const remainder = ruleValue.slice(1).trim();
+      return Number(fieldValue) < Number(remainder);
+    }
+    return ruleValue == fieldValue;
+  }
+
   filterEntries(collection: { entries: EntryValue[] }, filterRule: FilterRule) {
     return collection.entries.filter(entry => {
       const fieldValue = entry.data[filterRule.get('field')];
       if (Array.isArray(fieldValue)) {
         return fieldValue.includes(filterRule.get('value'));
       }
-      return fieldValue === filterRule.get('value');
+      return this.fieldValueMatches(fieldValue, filterRule.get('value'));
     });
   }
 }

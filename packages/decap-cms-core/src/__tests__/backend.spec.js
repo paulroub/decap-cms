@@ -95,6 +95,60 @@ describe('Backend', () => {
       expect(result.length).toBe(1);
     });
 
+    it('filters less than numbers', () => {
+      const result = backend.filterEntries(
+        {
+          entries: [
+            {
+              data: {
+                testField: 2,
+              },
+            },
+            {
+              data: {
+                testField: 3,
+              },
+            },
+            {
+              data: {
+                testField: 4,
+              },
+            },
+          ],
+        },
+        Map({ field: 'testField', value: '< 4' }),
+      );
+
+      expect(result.length).toBe(2);
+    });
+
+    it('filters less than dates', () => {
+      const result = backend.filterEntries(
+        {
+          entries: [
+            {
+              data: {
+                testField: new Date('2020-01-01'),
+              },
+            },
+            {
+              data: {
+                testField: new Date('2021-01-01'),
+              },
+            },
+            {
+              data: {
+                testField: new Date('2023-01-01'),
+              },
+            },
+          ],
+        },
+        Map({ field: 'testField', value: '< 2022-10-10' }),
+      );
+
+      expect(result.length).toBe(2);
+    });
+
     it('filters list values', () => {
       const result = backend.filterEntries(
         {
