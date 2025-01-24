@@ -1350,10 +1350,13 @@ export class Backend {
       .toArray();
   }
 
-  fieldValueMatches(fieldValue: unknown, ruleValue: unknown) {
+  fieldValueMatches(fieldValue: unknown, filterRule: FilterRule) {
     // dumb fix
+    
 
     if (typeof ruleValue === 'string' && ruleValue.startsWith('<')) {
+
+
       const remainder = ruleValue.slice(1).trim();
       return Number(fieldValue) < Number(remainder);
     }
