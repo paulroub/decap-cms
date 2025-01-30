@@ -1352,11 +1352,9 @@ export class Backend {
 
   fieldValueMatches(fieldValue: unknown, filterRule: FilterRule) {
     // dumb fix
-    
+    const ruleValue = filterRule.get('value');
 
     if (typeof ruleValue === 'string' && ruleValue.startsWith('<')) {
-
-
       const remainder = ruleValue.slice(1).trim();
       return Number(fieldValue) < Number(remainder);
     }
