@@ -1360,6 +1360,7 @@ export class Backend {
         return fieldValue < new Date(remainder);
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return fieldValue as any < remainder as any;
     }
     else if (typeof ruleValue === 'string' && ruleValue.startsWith('> ')) {
@@ -1369,6 +1370,7 @@ export class Backend {
         return fieldValue > new Date(remainder);
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return fieldValue as any > remainder as any;
     }
 
