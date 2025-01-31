@@ -1351,12 +1351,16 @@ export class Backend {
   }
 
   fieldValueMatches(fieldValue: unknown, filterRule: FilterRule) {
-    // dumb fix
     const ruleValue = filterRule.get('value');
 
-    if (typeof ruleValue === 'string' && ruleValue.startsWith('<')) {
-      const remainder = ruleValue.slice(1).trim();
-      return Number(fieldValue) < Number(remainder);
+    if (typeof ruleValue === 'string' && ruleValue.startsWith('< ')) {
+      const remainder = ruleValue.slice(2).trim();
+
+      if (typeof (fieldValue) === 'object' && fieldValue instanceof Date) {
+        return fieldValue < new Date(remainder);
+      }
+
+      return fieldValue as any < remainder as any;
     }
     return ruleValue == fieldValue;
   }
@@ -1367,7 +1371,7 @@ export class Backend {
       if (Array.isArray(fieldValue)) {
         return fieldValue.includes(filterRule.get('value'));
       }
-      return this.fieldValueMatches(fieldValue, filterRule.get('value'));
+      return this.fieldValueMatches(fieldValue, filterRule);
     });
   }
 }
