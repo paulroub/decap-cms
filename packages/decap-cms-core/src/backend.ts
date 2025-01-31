@@ -1356,22 +1356,21 @@ export class Backend {
     if (typeof ruleValue === 'string' && ruleValue.startsWith('< ')) {
       const remainder = ruleValue.slice(2).trim();
 
-      if (typeof (fieldValue) === 'object' && fieldValue instanceof Date) {
+      if (typeof fieldValue === 'object' && fieldValue instanceof Date) {
         return fieldValue < new Date(remainder);
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return fieldValue as any < remainder as any;
-    }
-    else if (typeof ruleValue === 'string' && ruleValue.startsWith('> ')) {
+      return ((fieldValue as any) < remainder) as any;
+    } else if (typeof ruleValue === 'string' && ruleValue.startsWith('> ')) {
       const remainder = ruleValue.slice(2).trim();
 
-      if (typeof (fieldValue) === 'object' && fieldValue instanceof Date) {
+      if (typeof fieldValue === 'object' && fieldValue instanceof Date) {
         return fieldValue > new Date(remainder);
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return fieldValue as any > remainder as any;
+      return ((fieldValue as any) > remainder) as any;
     }
 
     return ruleValue == fieldValue;
