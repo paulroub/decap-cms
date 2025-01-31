@@ -95,6 +95,28 @@ describe('Backend', () => {
       expect(result.length).toBe(1);
     });
 
+    it('filters list values', () => {
+      const result = backend.filterEntries(
+        {
+          entries: [
+            {
+              data: {
+                testField: ['valueOne', 'valueTwo', 'testValue'],
+              },
+            },
+            {
+              data: {
+                testField: ['valueThree'],
+              },
+            },
+          ],
+        },
+        Map({ field: 'testField', value: 'testValue' }),
+      );
+
+      expect(result.length).toBe(1);
+    });
+
     it('filters less than numbers', () => {
       const result = backend.filterEntries(
         {
@@ -149,26 +171,31 @@ describe('Backend', () => {
       expect(result.length).toBe(2);
     });
 
-    it('filters list values', () => {
+    it('filters less than strings', () => {
       const result = backend.filterEntries(
         {
           entries: [
             {
               data: {
-                testField: ['valueOne', 'valueTwo', 'testValue'],
+                testField: 'a',
               },
             },
             {
               data: {
-                testField: ['valueThree'],
+                testField: 'b',
+              },
+            },
+            {
+              data: {
+                testField: 'd',
               },
             },
           ],
         },
-        Map({ field: 'testField', value: 'testValue' }),
+        Map({ field: 'testField', value: '< c' }),
       );
 
-      expect(result.length).toBe(1);
+      expect(result.length).toBe(2);
     });
   });
 
