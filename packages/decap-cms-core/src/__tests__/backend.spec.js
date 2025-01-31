@@ -133,7 +133,7 @@ describe('Backend', () => {
             },
             {
               data: {
-                testField: 4,
+                testField: 100,
               },
             },
           ],
@@ -196,6 +196,33 @@ describe('Backend', () => {
       );
 
       expect(result.length).toBe(2);
+    });
+
+    it('filters greater than strings', () => {
+      const result = backend.filterEntries(
+        {
+          entries: [
+            {
+              data: {
+                testField: 'a',
+              },
+            },
+            {
+              data: {
+                testField: 'b',
+              },
+            },
+            {
+              data: {
+                testField: 'd',
+              },
+            },
+          ],
+        },
+        Map({ field: 'testField', value: '> c' }),
+      );
+
+      expect(result.length).toBe(1);
     });
   });
 

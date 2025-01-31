@@ -1362,6 +1362,16 @@ export class Backend {
 
       return fieldValue as any < remainder as any;
     }
+    else if (typeof ruleValue === 'string' && ruleValue.startsWith('> ')) {
+      const remainder = ruleValue.slice(2).trim();
+
+      if (typeof (fieldValue) === 'object' && fieldValue instanceof Date) {
+        return fieldValue > new Date(remainder);
+      }
+
+      return fieldValue as any > remainder as any;
+    }
+
     return ruleValue == fieldValue;
   }
 
